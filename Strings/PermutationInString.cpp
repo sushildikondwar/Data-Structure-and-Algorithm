@@ -16,29 +16,42 @@ int main() {
     int count2[26] = {0};
     
     s1 = "abac";
-    s2 = "acaafabcagsgbgxbgbgxxcbooo";
+    s2 = "acaafabcgsgbgxbgbgxxcbooo";
 
     for (int i=0; i<s1.length(); i++)   /* counting the characters in search string */
         count1[s1[i]-'a']++;
     
     int i=0;
+    int windowSize = s1.length();
 
-    while (i+s1.length() <= s2.length()) {   /* Search Window */
-        int j;
-        for (j=i; j<i+s1.length(); j++) {
-            int k=i;
-            count2[s2[j]-'a']++;
-            cout << s2[j];
-        }
-        if (checkEquality(count1, count2)) {
-            cout << "  <--  Permutation found!";
+    //  Running First Window
+    while (i < windowSize && i < s2.length()) {
+        int index = s2[i] - 'a';
+        count2[index]++;
+        i++;
+    }
+
+    if (checkEquality(count1, count2)) {
+        cout << "Permutation found!";
+        return 0;
+    }
+
+    //  Advancing the Window further
+    while (i < s2.length()) {
+        char newChar = s2[i];   //  next incoming char
+        int index = newChar - 'a';
+        count2[index]++;    //  new char count increment
+
+        char oldChar = s2[i - windowSize];  // recently outOfWindow char
+        index = oldChar - 'a';
+        count2[index]--;    //  decrement recent outOfWindow char
+
+        i++;
+
+        if (checkEquality(count1, count2)) {    //  comparing char-counts of Window and S1
+            cout << "Permutation found!";
             return 0;
         }
-        cout << endl;
-        while ( --j >= i ) {
-            count2[s2[j]-'a']--;
-        }
-        i++;                                /* Advancing the Window */
     }
     cout << endl << "Permutation not found!";
     return 0;
