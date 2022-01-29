@@ -1,30 +1,24 @@
-// Remark: Algorithm is under the time constraints but, Very Time-Consuming (~500ms)
-
+//  Used Stack Rule (Very Efficient and Intuitive Technique)
 #include <iostream>
 using namespace std;
 
 string removeDuplicates(string s) {
-
-    for (int i=0; i<s.length()-1;) {
-
-        if (s.length() < 2) //  return orelse, will throw arrayOutOfBound
-            return s;
-
-        if (s[i] == s[i+1]) {   //  remove succeeding element if equal
-            s.erase(i, 2);
-            if (i-1 >= 0)   //  and decrement pointer to check the equality of the preceeding element
-                i--;
-        }
-        else {  //  move further if succeeding elements not equal
-            i++;
-        }
+    string ans;     //  for answer storage
+    int i = 0;
+    while (i < s.length()) {    //  index traversing
+        if (ans.length() == 0)      //  if string is empty, then push char and move the pointer
+            ans.push_back(s[i]);
+        else if (ans.back() == s[i])    //  if incoming char found same as the last char element in ans string
+            ans.pop_back();             //  then pop that element from the ans string and move the pointer
+        else
+            ans.push_back(s[i]);    //  if chars are not adjacently equal, then simply push the char into ans and move the pointer
+        i++;
     }
-    return s;
+    return ans;
 }
 
 int main() {
     string s1 = "aababaab";
-
     cout << removeDuplicates(s1) << endl;
     return 0;
 }
