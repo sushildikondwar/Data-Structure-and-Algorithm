@@ -9,7 +9,32 @@ void printCompressed(string str, int k) {
         cout << str[i];
 }
 
-int compress(string chars)
+void compress(string chars) {
+    int i=0;
+    int ptr = 0;
+    int size = chars.size();
+    while (i < size) {
+        int j = i+1;
+        while (j < size && chars[i]==chars[j]) {    //  terminate if fully traversed or if new character encountered
+            j++;
+        }
+        
+        chars[ptr++] = chars[i];
+
+        int count = j-i;
+
+        if (count > 1) {
+            string cnt = to_string(count);  //  converting count into string digits
+            for (char ch: cnt)  //  splitting string count into separate digits
+                chars[ptr++] = ch;
+        }
+        i = j;
+    }
+    printCompressed(chars, ptr);
+}
+
+/* v1 - SELF
+void compress(string chars)
 {
     int ptr = 0;    //  tracker to fill the required output values in string itself
     int i = 0;  //  tracker to fetch the starting element of repeating chars
@@ -48,8 +73,8 @@ int compress(string chars)
     }
 
     printCompressed(chars, ptr);    //  printing the Compressed form of the input string (passing the updated string and the pointer upto which the string got updated)
-    return ptr;
 }
+*/
 
 int main() {
     string chrstr;
