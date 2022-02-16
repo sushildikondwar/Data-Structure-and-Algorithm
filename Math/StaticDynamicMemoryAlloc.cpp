@@ -66,5 +66,10 @@ int main() {
 		cout << endl;
 	}
 
+    ///////releasing 2D Array memory////////
+    for (int i=0; i<row; i++)
+        delete []matrix[i];
+	delete []matrix;
+
 	return 0;
 }
