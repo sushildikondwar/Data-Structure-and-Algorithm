@@ -15,12 +15,19 @@ void count1(int n) {
 	count1(n-1);		//	Tail Recursion (Recursion after all processing)
 }
 
+long long int factorial(int a) {
+	if (a == 0) 
+		return 1;
+	return a*factorial(a-1);
+}
+
 
 int main() {
-	int n = 10;
+	int n = 21;
 	count(n);
 	cout << endl;
 	count1(n);
+	cout << endl << "Factorial " << n << ": " << factorial(n) << endl;
 
 	return 0;
 }
